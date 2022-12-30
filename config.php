@@ -1,9 +1,9 @@
 <?php
 
-define("PATH","http://localhost/office");
+define("PATH","http://localhost/");
 define("CONTR","controller/controller.php");
 define("MODEL","model/model.php");
-define("PAGES", PATH."/views/pages/");
+define("THEME", PATH."/views/theme/");
 
 global $conn;
 

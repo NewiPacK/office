@@ -1,6 +1,6 @@
 <?php
 
-include_once MODEL;
+include MODEL;
 
 
 if(empty($_GET['view'])){
@@ -16,5 +16,16 @@ switch ($view)
 {
     case "index":
 
+        $cab = cabinets();
+
+    break;
+
+    case "reg":
+
+        reg();
+
     break;
 }
+
+
+include $_SERVER['DOCUMENT_ROOT']."/office/views/theme/index.php";
