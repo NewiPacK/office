@@ -18,13 +18,36 @@ switch ($view)
 
         $cab = cabinets();
 
-    break;
+        break;
+
+    case "cabinet":
+
+        $id = $_GET['id'];
+        $cab = cabinets_id($id);
+
+        $reserves = reserves($id);
 
     case "reg":
 
         reg();
 
-    break;
+        break;
+
+    case "auth":
+
+        auth();
+
+        break;
+
+    case "addreserve":
+
+        $id = $_GET['id'];
+
+        add_reserve($id);
+
+        header("location:?view=index");
+
+        break;
 }
 
 
