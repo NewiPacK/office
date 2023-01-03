@@ -1,5 +1,6 @@
 
 <?php if(isset($_COOKIE['id'])){?>
+        <h1>Забронируйте кабинет для себя</h1>
 <form method="POST">
 <table  border="1">
     <tr>
@@ -14,9 +15,11 @@
     <?php } ?>
 </table>
 </form>
+    <a href="?view=unset_user&id=<?php echo $_COOKIE['id']?>">Выйти из профиля</a>
 <?php }else{ ?>
-    <h2>Для бронирования авторизуйтесь или зарегестрируйтесь</h2>
-    <a href="?view=auth">Авторизоваться</a>
-    <a href="?view=reg">Зарегестрироваться</a>
+    <h1>Создайте учетную запись или войдите в существующую</h1>
+    <h2><a href="?view=auth">Авторизоваться</a></h2>
+    <h2><a href="?view=reg">Зарегистрироваться</a></h2>
 <?php } ?>
+
 

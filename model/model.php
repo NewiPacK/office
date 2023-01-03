@@ -30,9 +30,12 @@ function reserves($id)
 
         mysqli_query($conn, "DELETE FROM reserves WHERE cabinet = $id");
 
-        }else{
-            return $row;
+        mysqli_query($conn, "UPDATE cabinets SET status = 0 WHERE id = $id");
         }
+
+        return $row;
+
+        header("location:?view=cabinet&id=$id");
 }
 
 function  users($userid)
@@ -54,12 +57,9 @@ function cabinets_id($id)
 
     $row = mysqli_fetch_assoc($res);
 
-    if($row['date'] <= date('Y-m-d H:i:s')){
-
-        mysqli_query($conn, "UPDATE cabinets SET status = 0 WHERE id = $id");
-    }
-
     return $row;
+
+    header("location:?view=reserves&id=$id");
 }
 
 function cabinets()
@@ -122,5 +122,10 @@ function auth()
 
         }
     }
+}
+
+function unset_user($id)
+{
+    unset($_SESSION['id'][$id]);
 }
 

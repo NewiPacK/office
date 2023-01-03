@@ -40,7 +40,17 @@ switch ($view)
 
         break;
 
-    case "addreserve":
+    case "unset_user":
+
+        $id = $_GET['id'];
+
+        setcookie("id", $id, time() - 3600);
+
+        header("location:?view=index");
+
+        break;
+
+    case "add_reserve":
 
         $id = $_GET['id'];
 
