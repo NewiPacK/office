@@ -3,12 +3,10 @@
 include MODEL;
 
 
-if(empty($_GET['view'])){
-
+if(empty($_GET['view']))
+{
     $view = 'index';
-}
-else {
-
+} else {
     $view = $_GET['view'];
 }
 
@@ -23,9 +21,12 @@ switch ($view)
     case "cabinet":
 
         $id = $_GET['id'];
+
         $cab = cabinets_id($id);
 
-        $reserves = reserves($id);
+        if($cab['status'] != 0) {
+            $reserves = reserves($id);
+        }
 
     case "reg":
 
@@ -45,7 +46,7 @@ switch ($view)
 
         add_reserve($id);
 
-        header("location:?view=index");
+        header("location:?view=cabinet&id=$id");
 
         break;
 }

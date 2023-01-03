@@ -12,66 +12,69 @@ function add_reserve($id)
 
     global $conn;
 
-    mysqli_query($conn, "UPDATE cabinets SET status = 1 WHERE id = $id");
+    mysqli_query($conn, "UPDATE cabinets SET status = 1, date = CURRENT_TIMESTAMP + INTERVAL 2 minute WHERE id = $id");
 
-    mysqli_query($conn,"INSERT INTO reserves (name, email, phone, cabinet, date) VALUES ('$name', '$phone', '$email', '$cabinet', CURRENT_TIMESTAMP + INTERVAL 1 day)");
+    mysqli_query($conn,"INSERT INTO reserves (name, email, phone, cabinet, date) VALUES ('$name', '$phone', '$email', '$cabinet', CURRENT_TIMESTAMP + INTERVAL 2 minute)");
 
 }
 
 function reserves($id)
 {
-    global $conn;
+        global $conn;
 
-    $res = mysqli_query($conn, "SELECT * FROM reserves WHERE cabinet = $id");
+        $res = mysqli_query($conn,"SELECT id, name, date FROM reserves WHERE cabinet = $id");
 
-    $row = mysqli_fetch_assoc($res);
+        $row =  mysqli_fetch_assoc($res);
 
-    return $row;
+        if($row['date'] < date('Y-m-d H:i:s')){
 
+        mysqli_query($conn, "DELETE FROM reserves WHERE cabinet = $id");
+
+        }else{
+            return $row;
+        }
 }
 
 function  users($userid)
 {
-
     global $conn;
 
     $res = mysqli_query($conn, "SELECT * FROM users WHERE id = $userid");
 
     $row = mysqli_fetch_assoc($res);
 
-
     return $row;
 }
 
-function cabinets_id($id){
-
-
-
+function cabinets_id($id)
+{
     global $conn;
 
     $res = mysqli_query($conn,"SELECT * FROM cabinets WHERE id = $id");
 
-
     $row = mysqli_fetch_assoc($res);
 
+    if($row['date'] <= date('Y-m-d H:i:s')){
 
+        mysqli_query($conn, "UPDATE cabinets SET status = 0 WHERE id = $id");
+    }
 
     return $row;
 }
 
 function cabinets()
 {
-
     global $conn;
 
     $res = mysqli_query($conn,"SELECT * FROM cabinets");
 
     $arr = array();
-    while($row = mysqli_fetch_assoc($res)){
 
+    while($row = mysqli_fetch_assoc($res)){
 
         $arr[] = $row;
     }
+
     return $arr;
 }
 
@@ -93,8 +96,8 @@ function reg()
     }
 }
 
-function auth(){
-
+function auth()
+{
     global $conn;
 
     if($_POST) {
@@ -116,6 +119,7 @@ function auth(){
         }else{
 
             header("location:?view=auth");
+
         }
     }
 }
